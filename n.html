@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="new.css">
+  <!-- <tit1e>Speedometer - HTML, CSS & Javascript</title> -->
+</head>
+<body>
+<header>
+    <h1>Result Analysis</h1>
+</header>
+<nav>
+    <a href="home.html">Home</a>
+    <!-- <a href="regis.html">Registration</a> -->
+    <a href="Instructions.html">Instructions</a>
+    <a href="h.html">Analysis</a>
+    <!-- <a href="download.html">Download Result</a> -->
+</nav>
+<div class="health-monitor">
+  <div class="canvas">
+    <canvas id="ecgChart" width="800" height="250"></canvas>
+  </div>
+
+  <div class="readings">
+    <div class="health-reading">
+      <div class="spo2">
+        <h3>SpO2 Count</h3>
+        <p id="spo2Value">--</p>
+      </div>
+      <div class="bpm">
+        <h3>Beats Per Minute</h3>
+        <p id="bpmValue">--</p>
+      </div>
+    </div>
+  </div>
+  <div class="download" id="downloadButton"> <button>Download Report</button></div>
+  <div class="speedometer">
+      <!-- <div class="center"></div> -->
+      <div class="needle" style="--score:50" id="health_needle">
+      <span class="score"></span>
+    </div>
+  </div>
+</div>
+
+<video autoplay muted loop id="myVideo">
+<source src="5.mp4" type="video/mp4">
+</video>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
+<script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+<script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js"></script>
+
+  // Your JavaScript code for generating the ECG report goes here
+  // Ensure to adapt it to fit the structure and elements of this HTML file
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, get, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    // Initialize Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyAxTzviT4bRIAToRD8aNwwuXMpskpBHNO8",
+      authDomain: "registration-cdc5c.firebaseapp.com",
+      databaseURL: "https://registration-cdc5c-default-rtdb.firebaseio.com",
+      projectId: "registration-cdc5c",
+      storageBucket: "registration-cdc5c.appspot.com",
+      messagingSenderId: "243273823427",
+      appId: "1:243273823427:web:981260b77f9e15fe215e76",
+      measurementId: "G-EN57V03PRR"
+    };
+
+    const firebaseApp = initializeApp(firebaseConfig);
+    const database = getDatabase(firebaseApp);
+
+    // Function to generate image with user data
+    async function generateImage() {
+      try {
+        // Get a reference to the users node
+        const usersRef = ref(database, 'registrationForm');
+
+        // Query for users with email "ruth@gmail.com"
+        const querySnapshot = await get(
+          usersRef,
+          orderByChild("email"),
+          equalTo("ruth@gmail.com")
+        );
+
+        // Check if any users match the query
+        if (querySnapshot.exists()) {
+          // Iterate over the query results
+          querySnapshot.forEach((userSnapshot) => {
+            // Extract user data
+            const userData = userSnapshot.val();
+            
+            // Check if the user's email matches the specified email
+            if (userData.email === "ruth@gmail.com") {
+              // Create canvas element
+              const canvas = document.createElement('canvas');
+              const ctx = canvas.getContext("2d");
+              canvas.width = 1500; // Adjust width as needed
+              canvas.height = 1500;
+
+              // Set background color to white
+              ctx.fillStyle = "#FFF";
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+              // Title
+              ctx.fillStyle = "#000000";
+              ctx.font = "bold 36px Arial";
+              ctx.textAlign = "center";
+              ctx.fillText("MobileHeartSync", canvas.width / 2, 100);
+              ctx.font = "bold 24px Arial";
+              ctx.fillText("ECG Patient Report", canvas.width / 2, 150);
+
+              // Draw horizontal line
+              ctx.beginPath();
+              ctx.moveTo(100, 180); // Start point of the line
+              ctx.lineTo(canvas.width - 100, 180); // End point of the line
+              ctx.strokeStyle = "#000"; // Color of the line
+              ctx.lineWidth = 2; // Width of the line
+              ctx.stroke(); // Draw the line
+
+              // Patient's personal details
+              ctx.font = "bold 20px Arial";
+              ctx.textAlign = "left";
+              let posY = 230;
+
+              // Display user data
+              const details = [
+                `Name: ${userData.name}                                   Phone Number: ${userData.phone}                                 Email: ${userData.email}`,
+                `Age: ${userData.age}                                           Address: ${userData.address}`
+              ];
+              details.forEach(detail => {
+                ctx.fillText(detail, 100, posY);
+                posY += 60; // Increase vertical space to 60 pixels
+              });
+
+              // Draw horizontal line after Age
+              ctx.beginPath();
+              ctx.moveTo(100, posY - 30); // Start point of the line
+              ctx.lineTo(canvas.width - 100, posY - 30); // End point of the line
+              ctx.strokeStyle = "#000"; // Color of the line
+              ctx.lineWidth = 1; // Width of the line
+              ctx.stroke(); // Draw the line
+
+              // Doctor's detail
+              posY += 10; // Increase vertical space
+              ctx.fillStyle = "blue"; // Change color to black
+              ctx.fillText("Doctor's Detail", 100, posY);
+              ctx.fillStyle = "black"; // Change color to blue for the following text
+              ctx.fillText(`Name: ${userData.doctorName}                                 Phone: ${userData.doctorPhone}                                               Email: ${userData.doctorEmail}`, 100, posY + 60);
+              posY += 120; // Increase vertical space
+
+              // Draw horizontal line after Smoking/Alcohol Habit section
+              ctx.beginPath();
+              ctx.moveTo(100, posY - 30); // Start point of the line
+              ctx.lineTo(canvas.width - 100, posY - 30); // End point of the line
+              ctx.strokeStyle = "#000"; // Color of the line
+              ctx.lineWidth = 1; // Width of the line
+              ctx.stroke(); // Draw the line
+
+              
+
+              // Patient's health information
+              posY += 10; 
+              ctx.fillStyle = "blue"; // Change color to black
+              ctx.fillText("Patient's Health Information", 100, posY);
+              ctx.fillStyle = "black"; // Change color to blue for the following text
+              const healthInfo = [
+                `Height: ${userData.height}                                            Weight: ${userData.weight}                                                            BMI: ${userData.bmi}`,
+                `Is the patient diabetic?: ${userData.diabetes}        Does the patient have cholesterol?: ${userData.cholesterol}`,
+                `Smoking/Alcohol Habit?: ${userData.smokingAlcohol}               Family History of heart condition?: ${userData.familyHistory}`
+              ];
+              healthInfo.forEach(detail => {
+                ctx.fillText(detail, 100, posY + 60);
+                posY += 130; // Increase vertical space to 60 pixels
+              });
+
+
+              // Draw horizontal line after Smoking/Alcohol Habit section
+              ctx.beginPath();
+              ctx.moveTo(100, posY - 30); // Start point of the line
+              ctx.lineTo(canvas.width - 100, posY - 30); // End point of the line
+              ctx.strokeStyle = "#000"; // Color of the line
+              ctx.lineWidth = 1; // Width of the line
+              ctx.stroke(); // Draw the line
+
+              // Result section
+              posY += 10; // Increase vertical space
+              ctx.fillStyle = "blue";
+              ctx.fillText("Result", 100, posY);
+              posY += 40; // Increase vertical space
+              ctx.fillStyle = "black";
+              // Hardcoded values for SpO2 and BPM
+              const spo2Value = "98%"; // Hardcoded SpO2 value
+              const bpmValue = "85 bpm"; // Hardcoded BPM value
+              const healthR = "Green Range: Healthy"
+
+              // Display SpO2 and BPM values
+              ctx.fillText(`SpO2: ${spo2Value}                  BPM: ${bpmValue}                  Heart Analysis: ${healthR}`, 100, posY);
+
+              // Load speedometer image
+              const speedometerImage = new Image();
+              speedometerImage.src = "speedometer.jpg"; // Path to the speedometer image
+              speedometerImage.onload = () => {
+                // Adjust the size of the speedometer image
+                const aspectRatioSpeedometer = speedometerImage.width / speedometerImage.height;
+                const scaledWidthSpeedometer = 300; // Adjusted width
+                const scaledHeightSpeedometer = scaledWidthSpeedometer / aspectRatioSpeedometer;
+                ctx.drawImage(speedometerImage, 100, posY + 50, scaledWidthSpeedometer, scaledHeightSpeedometer);
+              }
+                // Load ECG image
+                const ecgImage = new Image();
+                ecgImage.src = "ecg.png"; // Path to the ECG image
+                ecgImage.onload = () => {
+                  // Adjust the size of the ECG image
+                  const aspectRatioECG = ecgImage.width / ecgImage.height;
+                  const scaledWidthECG = 300; // Adjusted width
+                  const scaledHeightECG = scaledWidthECG / aspectRatioECG;
+                  ctx.drawImage(ecgImage, 800, posY + 50, scaledWidthECG, scaledHeightECG);
+                }
+    // Convert canvas to image
+    const image = canvas.toDataURL("image/png");
+
+    // Trigger download
+    downloadImage(image);
+
+            }
+          });
+        } else {
+          console.log("No users found with the specified email.");
+        }
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      }
+    }
+
+    // Function to download the image
+    function downloadImage(image) {
+      const link = document.createElement('a');
+      link.href = image;
+      link.download = "user_report.png";
+      link.click();
+    }
+
+    // Call the function to generate image when the download button is clicked
+    document.getElementById("downloadButton").addEventListener("click", generateImage);
+
+</script>
+<script src="chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

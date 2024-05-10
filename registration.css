@@ -1,0 +1,82 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    /* background-color: #f2f2f2; */
+    /* background-color: #c68c8c; */
+    /* background: linear-gradient(to bottom right, #C7DBF7, #BFC7DE, #75708C, #C59594, #010101); */
+    /* background: linear-gradient(to bottom right, #AFD9D5, #D5D8D6, #76D0CF, #A8C6D2, #75B2CE); */
+    background: linear-gradient(to top, #CDFFD8,#94B9FF);
+}
+
+header {
+    background: black;
+    color: #fff;
+    padding: 20px 10px;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    /* background-image: url('https://via.placeholder.com/800x400'); Add your image URL here */
+    background-color:darkgray  ;
+    background-size: cover;
+}
+
+.section {
+    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h3 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.custom-field label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.custom-field input[type="text"],
+.custom-field input[type="tel"],
+.custom-field input[type="email"],
+.custom-field input[type="password"],
+.custom-field textarea,
+.custom-field select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-family: Arial, sans-serif;
+    background-color: rgba(255, 255, 255, 0.7); /* Add transparency for better visibility */
+}
+
+input[type="submit"] {
+    background: linear-gradient(to bottom, #33ccff, #3385ff);
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background: linear-gradient(to bottom, #3385ff, #33ccff);
+}

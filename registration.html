@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Registration</title>
+    <link rel="stylesheet" href="registration.css">
+</head>
+<body>
+    <header>
+        <h1>Patient Registration</h1>
+    </header>
+    <!-- <nav>
+        <a href="#">Home</a>
+        <a href="#">Instruction</a>
+        <a href="#">Prediction Page</a>
+    </nav> -->
+    <div class="container">
+        <h2>Registration Form</h2>
+        <form action="" id="registrationForm">
+            <div class="section">
+                <h3>Patient's Personal Details</h3>
+                <div class="form-group inline custom-field">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name">
+                </div>
+                <div class="form-group inline custom-field">
+                    <label for="age">Age:</label>
+                    <input type="text" id="age" name="age">
+                </div>
+                <div class="form-group inline custom-field">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <div class="form-group inline custom-field">
+                    <label for="email">Email Id:</label>
+                    <input type="email" id="email" name="email">
+                </div>
+                <div class="form-group inline custom-field">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password">
+                </div>
+                <div class="form-group custom-field  label-address">
+                    <label for="address">Address:</label>
+                    <textarea id="address" name="address"></textarea>
+                </div>
+            </div>
+            <div class="section">
+                <h3>Family Doctor Details</h3>
+                <div class="form-group inline custom-field">
+                    <label for="doctor-name">Name:</label>
+                    <input type="text" id="doctor-name" name="doctor-name">
+                </div>
+                <div class="form-group custom-field">
+                    <label for="doctor-phone">Phone No.:</label>
+                    <input type="tel" id="doctor-phone" name="doctor-phone">
+                </div>
+                <div class="form-group custom-field">
+                    <label for="doctor-email">Email Id:</label>
+                    <input type="email" id="doctor-email" name="doctor-email">
+                </div>
+            </div>
+            <div class="section">
+                <h3>Health Details</h3>
+                <div class="form-group inline custom-field">
+                    <label for="height">Height(in ft):</label>
+                    <input type="text" id="height" name="height">
+                </div>
+                <div class="form-group inline custom-field">
+                    <label for="weight">Weight(in kg):</label>
+                    <input type="text" id="weight" name="weight">
+                </div>
+                <div class="form-group inline custom-field">
+                    <label for="bmi">BMI:</label>
+                    <input type="text" id="bmi" name="bmi">
+                </div>
+                <div class="form-group inline custom-field">
+                    <label for="diabetes">Diabetes:</label>
+                    <select id="diabetes" name="diabetes">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+                <div class="form-group inline custom-field">
+                    <label for="cholesterol">Cholesterol:</label>
+                    <select id="cholesterol" name="cholesterol">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+                <div class="form-group inline custom-field">
+                    <label for="smoking_alcohol">Smoking/Alcohol Habits:</label>
+                    <select id="smoking_alcohol" name="smoking_alcohol">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+            </div>
+            <div class="section">
+                <h3>Family History of Heart Conditions</h3>
+                <div class="form-group custom-field">
+                    <select id="family_history" name="family_history">
+                        <option value="none">None</option>
+                        <option value="first-degree-plus">1st Degree+</option>
+                        <option value="multiple-onset">Multiple/Onset</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+   
+    <script type="text/javascript" src="registration.js"></script>
+</body>
+</html>
